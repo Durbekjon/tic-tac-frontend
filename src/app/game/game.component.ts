@@ -4,6 +4,7 @@ import { io } from 'socket.io-client';
 import { environment } from '../../environments/environment';
 import { GameState } from './interfaces/game.interface';
 import { SOCKET_EVENTS } from '../../constants';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-game',
@@ -24,11 +25,13 @@ export class GameComponent implements OnInit, OnDestroy {
     players: {},
     status: 'waiting',
   };
+  soundPlayed: boolean = false;
   onlineUsers: string[] = [];
   protected readonly Object = Object;
   private clickSound = new Audio('assets/sounds/click-sound.mp3');
   private tadaSound = new Audio('assets/sounds/tada-sound.mp3');
   private failSound = new Audio('assets/sounds/fail-sound.mp3');
+  private router: Router = new Router;
 
   constructor() {
     this.socket = io(environment.wsUrl);
@@ -157,13 +160,34 @@ export class GameComponent implements OnInit, OnDestroy {
       .map(([id, symbol]) => ({ id, symbol }));
   }
 
-  async wonner() {
+  leaveGame() {
+    console.log(this.gameState.status)
+    if (this.gameState.status === 'in-progress') {
+      this.socket.emit(SOCKET_EVENTS.LEAVE_GAME, {
+        gameId: this.activeGameId,
+        playerId: this.currentPlayerId,
+      });
+    }
+    this.gameState.isGameOver = true;
+    this.isInGame = false;
+    this.router.navigate(['/']);
+  }
+
+   winner() {
+    if(!this.gameState.soundPlayed){
      this.tadaSound.play()
+     this.soundPlayed = true
+    }
+    this.gameState.soundPlayed = true
+
     return 'You won! 🎉';
   }
 
-  async loser() {
-     this.failSound.play()
+   loser() {
+    if(!this.gameState.soundPlayed){
+      this.failSound.play()
+     this.soundPlayed = true
+     }
     return 'Opponent won!';
   }
 }

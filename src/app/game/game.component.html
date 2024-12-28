@@ -19,7 +19,7 @@
   <!-- Game Invitation -->
   <div class="invite-notification" *ngIf="pendingInvite">
     <h3>Game Invitation</h3>
-    <p>You have been invited to play by Player {{ pendingInvite.from }}!</p>
+    <p>You have been invited to play by unknown player!</p>
     <div class="invite-actions">
       <button
         class="accept"
@@ -47,11 +47,11 @@
       <h3 *ngIf="!gameState.isGameOver">
         {{ isMyTurn() ? 'Your turn!' : "Opponent's turn..." }}
       </h3>
-      <p *ngIf="gameState.isGameOver">
+      <p *ngIf="gameState.isGameOver" style="color:#fff">
         {{
           gameState.winner
             ? gameState.winner === currentPlayerId
-              ? wonner()
+              ? winner()
               : loser()
             : "It's a draw!"
         }}
@@ -71,7 +71,8 @@
           {{ gameState.board[row * 3 + col] }}
         </div>
       </div>
-      <a href="/" class="back-button">Back</a>
+
+      <button class="back-button" (click)="leaveGame()">Back</button>
     </div>
 
   </div>

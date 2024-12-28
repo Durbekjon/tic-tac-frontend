@@ -7,4 +7,5 @@ export interface GameState {
   status: 'waiting' | 'in-progress' | 'finished';
   gameId?: string;
   winningCombination?: number[];
+  soundPlayed?: boolean;
 }
