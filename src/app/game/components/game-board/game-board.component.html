@@ -1,9 +1,8 @@
 <div class="game-board">
   <div class="game-info">
-    <h3>Tic-Tac-Toe</h3>
-    <p *ngIf="!gameState.isGameOver" class="status-message" [class.my-turn]="isMyTurn">
+    <h3 *ngIf="!gameState.isGameOver" class="status-message" [class.my-turn]="isMyTurn">
       {{ isMyTurn ? "Your turn!" : "Opponent's turn..." }}
-    </p>
+    </h3>
     <p *ngIf="gameState.isGameOver" class="status-message" 
        [class.winner]="gameState.winner === gameState.players[currentPlayerId]"
        [class.loser]="gameState.winner && gameState.winner !== gameState.players[currentPlayerId]"

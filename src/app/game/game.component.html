@@ -4,7 +4,7 @@
     class="players-list"
     *ngIf="!isInGame && !pendingInvite && !gameState.isGameOver"
   >
-    <h2>Online Players ({{ onlineUsers.length }})</h2>
+    <span class="online-users"><i class='bx bx-user'></i> ({{ onlineUsers.length }})</span>
     <div class="player-item" *ngFor="let userId of onlineUsers">
       <span>Player {{ userId }}</span>
       <button (click)="invitePlayer(userId)" [disabled]="pendingInvite">
@@ -44,16 +44,15 @@
     *ngIf="gameState && Object.keys(gameState.players).length === 2"
   >
     <div class="game-info">
-      <h3>Tic-Tac-Toe</h3>
-      <p *ngIf="!gameState.isGameOver">
+      <h3 *ngIf="!gameState.isGameOver">
         {{ isMyTurn() ? 'Your turn!' : "Opponent's turn..." }}
-      </p>
+      </h3>
       <p *ngIf="gameState.isGameOver">
         {{
           gameState.winner
             ? gameState.winner === currentPlayerId
-              ? 'You won!'
-              : 'Opponent won!'
+              ? wonner()
+              : loser()
             : "It's a draw!"
         }}
       </p>
@@ -72,6 +71,8 @@
           {{ gameState.board[row * 3 + col] }}
         </div>
       </div>
+      <a href="/" class="back-button">Back</a>
     </div>
+
   </div>
 </div>

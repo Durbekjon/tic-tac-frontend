@@ -12,6 +12,7 @@ export class GameBoardComponent {
   @Input() currentPlayerId!: string;
   @Input() isMyTurn!: boolean;
   @Output() move = new EventEmitter<number>();
+  private clickSound = new Audio('assets/sounds/click.mp3');
 
   rows = [0, 1, 2];
   cols = [0, 1, 2];
@@ -19,6 +20,7 @@ export class GameBoardComponent {
   makeMove(index: number): void {
     if (this.isValidMove(index)) {
       this.move.emit(index);
+      this.clickSound.play()
     }
   }
 

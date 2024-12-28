@@ -26,6 +26,9 @@ export class GameComponent implements OnInit, OnDestroy {
   };
   onlineUsers: string[] = [];
   protected readonly Object = Object;
+  private clickSound = new Audio('assets/sounds/click-sound.mp3');
+  private tadaSound = new Audio('assets/sounds/tada-sound.mp3');
+  private failSound = new Audio('assets/sounds/fail-sound.mp3');
 
   constructor() {
     this.socket = io(environment.wsUrl);
@@ -97,6 +100,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
     // Update local state immediately for better UX
     this.gameState.board[index] = this.gameState.players[this.currentPlayerId];
+    this.clickSound.play()
 
     // Send move to server
     this.socket.emit(SOCKET_EVENTS.MAKE_MOVE, {
@@ -151,5 +155,15 @@ export class GameComponent implements OnInit, OnDestroy {
     return Object.entries(this.gameState.players)
       .filter(([id]) => id !== this.currentPlayerId)
       .map(([id, symbol]) => ({ id, symbol }));
+  }
+
+  async wonner() {
+     this.tadaSound.play()
+    return 'You won! 🎉';
+  }
+
+  async loser() {
+     this.failSound.play()
+    return 'Opponent won!';
   }
 }

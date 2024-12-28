@@ -8,7 +8,6 @@ import { GameModule } from './game/game.module';
   imports: [RouterOutlet, GameModule],
   template: `
     <main>
-      <h1>Battle Game</h1>
       <router-outlet></router-outlet>
     </main>
   `,
