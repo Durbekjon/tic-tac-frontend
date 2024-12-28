@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Socket } from 'socket.io-client';
 import { io } from 'socket.io-client';
 import { environment } from '../../environments/environment';
-import { SOCKET_EVENTS } from '../../../../shared/constants';
 import { GameState } from './interfaces/game.interface';
+import { SOCKET_EVENTS } from '../../constants';
 
 @Component({
   selector: 'app-game',
