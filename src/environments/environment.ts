@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  wsUrl: process.env['WS_URL'],
+  wsUrl: 'https://tic-tac-toe-client-8c08.onrender.com',
 };
