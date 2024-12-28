@@ -6,7 +6,7 @@
   >
     <span class="online-users"><i class='bx bx-user'></i> ({{ onlineUsers.length }})</span>
     <div class="player-item" *ngFor="let userId of onlineUsers">
-      <span>Player {{ userId }}</span>
+      <span>Player {{ onlineUsers.indexOf(userId) + 1 }}</span>
       <button (click)="invitePlayer(userId)" [disabled]="pendingInvite">
         Invite to Play
       </button>
