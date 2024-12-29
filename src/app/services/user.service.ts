@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface User {
   id: string;
@@ -12,8 +13,8 @@ export interface User {
   providedIn: 'root',
 })
 export class UserService {
-  private readonly apiUrl = 'http://localhost:3000/api';
-  private readonly appKey = '6920f11c-1827-474b-be85-81d3fad2c057';
+  private readonly apiUrl = environment.apiUrl;
+  private readonly appKey = environment.appKey;
 
   constructor(private readonly http: HttpClient) {}
 
