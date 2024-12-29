@@ -4,7 +4,9 @@
     class="players-list"
     *ngIf="!isInGame && !pendingInvite && !gameState.isGameOver"
   >
-    <span class="online-users"><i class='bx bx-user'></i> ({{ onlineUsers.length }})</span>
+    <span class="online-users"
+      ><i class="bx bx-user"></i> ({{ onlineUsers.length }})</span
+    >
     <div class="player-item" *ngFor="let userId of onlineUsers">
       <span>Player {{ onlineUsers.indexOf(userId) + 1 }}</span>
       <button (click)="invitePlayer(userId)" [disabled]="pendingInvite">
@@ -45,9 +47,9 @@
   >
     <div class="game-info">
       <h3 *ngIf="!gameState.isGameOver">
-        {{ isMyTurn() ? 'Your turn!' : "Opponent's turn..." }}
+        {{ isMyTurn() ? "Your turn!" : "Opponent's turn..." }}
       </h3>
-      <p *ngIf="gameState.isGameOver" style="color:#fff">
+      <p *ngIf="gameState.isGameOver" style="color: #fff">
         {{
           gameState.winner
             ? gameState.winner === currentPlayerId
@@ -71,9 +73,12 @@
           {{ gameState.board[row * 3 + col] }}
         </div>
       </div>
-
-      <button class="back-button" (click)="leaveGame()">Back</button>
+      <div class="footer-buttons">
+        <button class="back-button" (click)="leaveGame()">Back</button>
+        <button class="invite-button" (click)="inviteAgain()" *ngIf="gameState.isGameOver">
+          Invite again
+        </button>
+      </div>
     </div>
-
   </div>
 </div>

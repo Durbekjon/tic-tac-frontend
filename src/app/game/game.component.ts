@@ -32,6 +32,7 @@ export class GameComponent implements OnInit, OnDestroy {
   private tadaSound = new Audio('assets/sounds/tada-sound.mp3');
   private failSound = new Audio('assets/sounds/fail-sound.mp3');
   private router: Router = new Router;
+  enemyId: string = '';
 
   constructor() {
     this.socket = io(environment.wsUrl);
@@ -83,6 +84,9 @@ export class GameComponent implements OnInit, OnDestroy {
 
     this.socket.on(SOCKET_EVENTS.GAME_ENDED, (data: GameState) => {
       this.gameState = data;
+      this.enemyId = Object.keys(this.gameState.players).find(
+        (id) => id !== this.currentPlayerId,
+      ) as string || '';
     });
 
     this.socket.on(SOCKET_EVENTS.GAME_ERROR, (data: { message: string }) => {
@@ -99,7 +103,6 @@ export class GameComponent implements OnInit, OnDestroy {
     ) {
       return;
     }
-
 
     // Update local state immediately for better UX
     this.gameState.board[index] = this.gameState.players[this.currentPlayerId];
@@ -127,6 +130,16 @@ export class GameComponent implements OnInit, OnDestroy {
       from: this.currentPlayerId,
       to: otherPlayerId,
     });
+  }
+
+  inviteAgain(){
+    if (this.enemyId) {
+      this.socket.emit(SOCKET_EVENTS.SEND_GAME_INVITE, {
+        from: this.currentPlayerId,
+        to: this.enemyId,
+      });
+      this.enemyId = '';
+    }
   }
 
   acceptInvite() {
@@ -180,7 +193,7 @@ export class GameComponent implements OnInit, OnDestroy {
     }
     this.gameState.soundPlayed = true
 
-    return 'You won! 🎉';
+    return 'You won! ';
   }
 
    loser() {
