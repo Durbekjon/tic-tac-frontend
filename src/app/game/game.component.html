@@ -1,27 +1,41 @@
-<div class="game-container">
+<div class="game-container" *ngIf="user && !userWaiting">
   <!-- Player List -->
   <div
     class="players-list"
-    *ngIf="!isInGame && !pendingInvite && !gameState.isGameOver"
+    *ngIf="!isInGame && !pendingInvite && !gameState?.isGameOver"
   >
     <span class="online-users"
-      ><i class="bx bx-user"></i> ({{ onlineUsers.length }})</span
+      ><i class="bx bx-user"></i> {{ onlineUsers.length + 1 }}</span
     >
-    <div class="player-item" *ngFor="let userId of onlineUsers">
-      <span>Player {{ onlineUsers.indexOf(userId) + 1 }}</span>
-      <button (click)="invitePlayer(userId)" [disabled]="pendingInvite">
-        Invite to Play
+    <div class="player-item" *ngFor="let data of onlineUsers">
+      <span class="player-name"
+        >👤 {{ data.user?.firstName }} {{ data.user?.lastName }}
+      </span>
+      <button (click)="invitePlayer(data.userId)" [disabled]="pendingInvite">
+        send invite 🎮️️️️️️
       </button>
     </div>
-    <div *ngIf="onlineUsers.length === 0" class="no-players">
-      Waiting for other players to connect...
+    <div
+      *ngIf="onlineUsers.length === 0"
+      style="color: #777; text-align: center; padding: 30px"
+      class="no-players"
+    >
+      <div class="waiting-animation">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <p>Waiting for other players to connect...</p>
     </div>
   </div>
 
   <!-- Game Invitation -->
   <div class="invite-notification" *ngIf="pendingInvite">
     <h3>Game Invitation</h3>
-    <p>You have been invited to play by unknown player!</p>
+    <p>
+      You have been invited to play by {{ pendingInvite.user?.firstName }}
+      {{ pendingInvite.user?.lastName }}
+    </p>
     <div class="invite-actions">
       <button
         class="accept"
@@ -41,10 +55,7 @@
   </div>
 
   <!-- Game Board -->
-  <div
-    class="game-board"
-    *ngIf="gameState && Object.keys(gameState.players).length === 2"
-  >
+  <div class="game-board" *ngIf="gameState.status !== 'waiting' && isInGame">
     <div class="game-info">
       <h3 *ngIf="!gameState.isGameOver">
         {{ isMyTurn() ? "Your turn!" : "Opponent's turn..." }}
@@ -75,10 +86,17 @@
       </div>
       <div class="footer-buttons">
         <button class="back-button" (click)="leaveGame()">Back</button>
-        <button class="invite-button" (click)="inviteAgain()" *ngIf="gameState.isGameOver">
+        <button
+          class="invite-button"
+          (click)="inviteAgain()"
+          *ngIf="gameState.isGameOver"
+        >
           Invite again
         </button>
       </div>
     </div>
   </div>
+</div>
+<div class="no-user" *ngIf="!user && !userWaiting">
+  <h3 class="no-user-message">You are not logged in!!!</h3>
 </div>

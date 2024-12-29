@@ -3,5 +3,8 @@ import { GameComponent } from './game/game.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'game', pathMatch: 'full' },
-  { path: 'game', component: GameComponent }
+  {
+    path: 'game',
+    component: GameComponent,
+  },
 ];
