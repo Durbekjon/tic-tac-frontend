@@ -1,31 +1,12 @@
 <div class="game-container" *ngIf="user && !userWaiting">
-  <!-- Player List -->
-  <div
+  <app-player-list
     class="players-list"
-    *ngIf="!isInGame && !pendingInvite && !gameState?.isGameOver"
-  >
-    <span class="online-users"
-      ><i class="bx bx-user"></i> {{ onlineUsers.length + 1 }}</span
-    >
-    <div class="player-item" *ngFor="let user of onlineUsers">
-      <span class="player-name">👤 {{ user?.firstName }} </span>
-      <button (click)="invitePlayer(user.userId)" [disabled]="pendingInvite">
-        send invite 🎮️️️️️️
-      </button>
-    </div>
-    <div
-      *ngIf="onlineUsers.length === 0"
-      style="color: #777; text-align: center; padding: 30px"
-      class="no-players"
-    >
-      <div class="waiting-animation">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-      </div>
-      <p>Waiting for other players to connect...</p>
-    </div>
-  </div>
+    [onlineUsers]="onlineUsers"
+    [pendingInvite]="!!pendingInvite"
+    [sentInvites]="sentInvites"
+    (invitePlayer)="invitePlayer($event)"
+    *ngIf="!isInGame && !pendingInvite"
+  ></app-player-list>
 
   <!-- Game Invitation -->
   <div class="invite-notification" *ngIf="pendingInvite">
@@ -45,7 +26,7 @@
       <button
         class="decline"
         [disabled]="!pendingInvite"
-        (click)="declineInvite()"
+        (click)="rejectInvite()"
       >
         Decline
       </button>
@@ -58,10 +39,7 @@
       <h3 *ngIf="!gameState.isGameOver">
         {{ isMyTurn() ? "Your turn!" : "Opponent's turn..." }}
       </h3>
-      <p
-        *ngIf="gameState.isGameOver"
-        class="game-result"
-      >
+      <p *ngIf="gameState.isGameOver" class="game-result">
         {{
           gameState.winner
             ? gameState.winner === this.gameState.players[this.currentPlayerId]

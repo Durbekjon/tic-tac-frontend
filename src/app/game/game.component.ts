@@ -30,6 +30,7 @@ export class GameComponent implements OnInit, OnDestroy {
   chatId: string = '';
   user: any;
   userWaiting: boolean = false;
+  sentInvites: string[] = [];
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
@@ -62,29 +63,7 @@ export class GameComponent implements OnInit, OnDestroy {
       });
     }
 
-    this.socket.emit(SOCKET_EVENTS.USER_DISCONNECT, {
-      user: this.user,
-    });
-
-    this.isInGame = false;
-    this.gameState = {
-      board: Array(9).fill(''),
-      currentPlayer: 'X',
-      winner: null,
-      isGameOver: false,
-      players: {},
-      status: 'waiting',
-    };
-    this.activeGameId = '';
     this.socket.disconnect(); // Socketni to'xtatish
-  }
-
-  playWithBot(): void {
-    this.isInGame = true;
-    this.socket.emit(SOCKET_EVENTS.START_BOT_GAME, {
-      playerId: this.currentPlayerId,
-      userId: this.user.id,
-    });
   }
 
   playSound(soundType: string) {
@@ -154,7 +133,12 @@ export class GameComponent implements OnInit, OnDestroy {
     }
   }
 
-  declineInvite() {
+
+  rejectInvite() {
+    this.socket.emit(SOCKET_EVENTS.REJECT_INVITE, {
+      from: this.pendingInvite?.from,
+      to: this.currentPlayerId,
+    });
     this.pendingInvite = null;
   }
 
@@ -196,6 +180,11 @@ export class GameComponent implements OnInit, OnDestroy {
         (player: any) =>
           player.userId !== this.currentPlayerId && player.firstName
       );
+    });
+
+    this.socket.on(SOCKET_EVENTS.INVITE_SENT, (data: any) => {
+      console.log({ data });
+      this.sentInvites = data;
     });
 
     this.socket.on(
