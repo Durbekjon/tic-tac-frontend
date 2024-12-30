@@ -1,4 +1,7 @@
 export const environment = {
-  production: true,
-  wsUrl: 'wss://tic-tac-toe-2-rh7g.onrender.com',
+  production: false,
+  wsUrl: 'wss://app2.koproq.uz',
+
+  apiUrl: 'https://app2.koproq.uz/api',
+  appKey: '6920f11c-1827-474b-be85-81d3fad2c057',
 };
