@@ -1,5 +1,4 @@
 export const environment = {
-  production: false,
   wsUrl: 'wss://app2.koproq.uz',
 
   apiUrl: 'https://app2.koproq.uz/api',
