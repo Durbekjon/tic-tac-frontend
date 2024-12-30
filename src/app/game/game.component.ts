@@ -30,7 +30,6 @@ export class GameComponent implements OnInit, OnDestroy {
   chatId: string = '';
   user: any;
   userWaiting: boolean = false;
-
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
@@ -86,6 +85,21 @@ export class GameComponent implements OnInit, OnDestroy {
       playerId: this.currentPlayerId,
       userId: this.user.id,
     });
+  }
+
+  playSound(soundType: string) {
+    switch (soundType) {
+      case 'win':
+        const winSound = new Audio('assets/sounds/win.mp3');
+        winSound.play();
+        break;
+      case 'lose':
+        const loseSound = new Audio('assets/sounds/lose.mp3');
+        loseSound.play();
+        break;
+      default:
+        break;
+    }
   }
 
   makeMove(index: number) {
@@ -207,10 +221,12 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   winner(): string {
+    this.playSound('win');
     return 'Congratulations! you win 🎉️️️️️️';
   }
 
   loser(): string {
+    this.playSound('lose');
     return 'Opponent wins! Better luck next time!';
   }
 
