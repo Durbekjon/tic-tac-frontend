@@ -1,7 +1,7 @@
 export const SOCKET_EVENTS = {
   // Connection events
   CONNECT: 'connect' as const,
-  DISCONNECT: 'disconnect' as const,
+  USER_DISCONNECT: 'userDisconnected' as const,
   USER_CONNECTED: 'userConnected' as const,
   ONLINE_USERS: 'onlineUsers' as const,
 
@@ -18,6 +18,7 @@ export const SOCKET_EVENTS = {
   GAME_STATE_UPDATED: 'gameStateUpdated' as const,
   END_GAME: 'endGame' as const,
   LEAVE_GAME: 'leaveGame' as const,
+  START_BOT_GAME: 'startBotGame' as const,
   // User status events
   USER_STATUS_UPDATED: 'userStatusUpdated' as const,
   ALL_USER_STATUSES: 'allUserStatuses' as const,

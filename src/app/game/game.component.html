@@ -7,9 +7,9 @@
     <span class="online-users"
       ><i class="bx bx-user"></i> {{ onlineUsers.length + 1 }}</span
     >
-    <div class="player-item" *ngFor="let data of onlineUsers">
-      <span class="player-name">👤 {{ data.user?.firstName }} </span>
-      <button (click)="invitePlayer(data.userId)" [disabled]="pendingInvite">
+    <div class="player-item" *ngFor="let user of onlineUsers">
+      <span class="player-name">👤 {{ user?.firstName }} </span>
+      <button (click)="invitePlayer(user.userId)" [disabled]="pendingInvite">
         send invite 🎮️️️️️️
       </button>
     </div>
@@ -58,13 +58,16 @@
       <h3 *ngIf="!gameState.isGameOver">
         {{ isMyTurn() ? "Your turn!" : "Opponent's turn..." }}
       </h3>
-      <p *ngIf="gameState.isGameOver" style="color: #fff">
+      <p
+        *ngIf="gameState.isGameOver"
+        class="game-result"
+      >
         {{
           gameState.winner
-            ? gameState.winner === currentPlayerId
+            ? gameState.winner === this.gameState.players[this.currentPlayerId]
               ? winner()
               : loser()
-            : "It's a draw!"
+            : "It's a draw 🤝"
         }}
       </p>
     </div>
