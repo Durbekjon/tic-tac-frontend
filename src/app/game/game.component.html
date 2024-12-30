@@ -8,9 +8,7 @@
       ><i class="bx bx-user"></i> {{ onlineUsers.length + 1 }}</span
     >
     <div class="player-item" *ngFor="let data of onlineUsers">
-      <span class="player-name"
-        >👤 {{ data.user?.firstName }} {{ data.user?.lastName }}
-      </span>
+      <span class="player-name">👤 {{ data.user?.firstName }} </span>
       <button (click)="invitePlayer(data.userId)" [disabled]="pendingInvite">
         send invite 🎮️️️️️️
       </button>
