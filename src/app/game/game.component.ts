@@ -90,12 +90,16 @@ export class GameComponent implements OnInit, OnDestroy {
   playSound(soundType: string) {
     switch (soundType) {
       case 'win':
-        const winSound = new Audio('assets/sounds/win.mp3');
+        const winSound = new Audio('assets/sounds/tada-sound.mp3');
         winSound.play();
         break;
       case 'lose':
-        const loseSound = new Audio('assets/sounds/lose.mp3');
+        const loseSound = new Audio('assets/sounds/fail-sound.mp3');
         loseSound.play();
+        break;
+      case 'click':
+        const clickSound = new Audio('assets/sounds/click-sound.mp3');
+        clickSound.play();
         break;
       default:
         break;
@@ -111,6 +115,7 @@ export class GameComponent implements OnInit, OnDestroy {
     ) {
       return;
     }
+    this.playSound('click');
 
     this.socket.emit(SOCKET_EVENTS.MAKE_MOVE, {
       gameId: this.activeGameId,
