@@ -48,7 +48,7 @@ export class GameComponent implements OnInit, OnDestroy {
     this.userWaiting = true;
     this.chatId = this.route.snapshot.queryParams['chat_id'];
     this.user = await this.userService.getUser(this.chatId);
-
+    console.log(this.user);
     this.userWaiting = false;
     this.setupSocketListeners();
     this.connectUser();
