@@ -15,8 +15,10 @@ export class UserService {
   async getUser(chatId: string): Promise<IUser | null> {
     try {
       const url = `${this.apiUrl}/user/${chatId}?app_key=${this.appKey}`;
-      const response = await firstValueFrom(this.http.get<IUser>(url));
-      return response;
+      const response = await firstValueFrom(
+        this.http.get<{ success: boolean; user: IUser | null }>(url)
+      );
+      return response.user;
     } catch (error) {
       return null;
     }
