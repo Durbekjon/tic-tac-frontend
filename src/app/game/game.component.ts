@@ -67,14 +67,14 @@ export class GameComponent implements OnInit, OnDestroy {
 
   playSound(soundType: string) {
     switch (soundType) {
-      case 'win':
-        const winSound = new Audio('assets/sounds/tada-sound.mp3');
-        winSound.play();
-        break;
-      case 'lose':
-        const loseSound = new Audio('assets/sounds/fail-sound.mp3');
-        loseSound.play();
-        break;
+      // case 'win':
+      //   const winSound = new Audio('assets/sounds/tada-sound.mp3');
+      //   winSound.play();
+      //   break;
+      // case 'lose':
+      //   const loseSound = new Audio('assets/sounds/fail-sound.mp3');
+      //   loseSound.play();
+      //   break;
       case 'click':
         const clickSound = new Audio('assets/sounds/click-sound.mp3');
         clickSound.play();
