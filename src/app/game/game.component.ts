@@ -43,7 +43,6 @@ export class GameComponent implements OnInit, OnDestroy {
     this.userWaiting = true;
     this.chatId = this.route.snapshot.queryParams['chat_id'];
     this.user = await this.userService.getUser(this.chatId);
-    console.log(this.user);
     this.userWaiting = false;
     this.currentPlayerId = this.chatId;
     this.setupSocketListeners();
@@ -85,6 +84,15 @@ export class GameComponent implements OnInit, OnDestroy {
     }
   }
 
+  playWithBot() {
+    const userId = this.currentPlayerId;
+    this.socket.emit(SOCKET_EVENTS.PLAY_WITH_BOT, { userId });
+  }
+
+  isPlayingWithBot(): boolean {
+    return this.gameState.players['bot'].symbol === 'O';
+  }
+
   makeMove(index: number) {
     if (
       !this.gameState ||
@@ -103,14 +111,24 @@ export class GameComponent implements OnInit, OnDestroy {
     });
   }
 
+  getOtherPlayerId() {
+    const otherPlayerId = Object.keys(this.gameState.players).find(
+      (playerId) => playerId !== this.currentPlayerId
+    ) as string;
+
+    return otherPlayerId;
+  }
+
   isMyTurn(): boolean {
     console.log({
-      gCurrent: this.gameState?.currentPlayer,
-      curr: this.currentPlayerId,
+      currentPlayer: this.gameState?.currentPlayer,
+      currentUser: this.currentPlayerId,
+      currentUserSymbol: this.gameState?.players[this.currentPlayerId].symbol,
     });
+
     return (
       this.gameState?.currentPlayer ===
-        this.gameState.players[this.currentPlayerId] &&
+        this.gameState.players[this.currentPlayerId].symbol &&
       !this.gameState.isGameOver
     );
   }
@@ -132,7 +150,6 @@ export class GameComponent implements OnInit, OnDestroy {
       this.pendingInvite = null;
     }
   }
-
 
   rejectInvite() {
     this.socket.emit(SOCKET_EVENTS.REJECT_INVITE, {
@@ -175,7 +192,6 @@ export class GameComponent implements OnInit, OnDestroy {
     });
 
     this.socket.on(SOCKET_EVENTS.ONLINE_USERS, (players: any[]) => {
-      console.log({ players });
       this.onlineUsers = players.filter(
         (player: any) =>
           player.userId !== this.currentPlayerId && player.firstName
@@ -183,7 +199,6 @@ export class GameComponent implements OnInit, OnDestroy {
     });
 
     this.socket.on(SOCKET_EVENTS.INVITE_SENT, (data: any) => {
-      console.log({ data });
       this.sentInvites = data;
     });
 

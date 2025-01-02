@@ -6,7 +6,15 @@
     [sentInvites]="sentInvites"
     (invitePlayer)="invitePlayer($event)"
     *ngIf="!isInGame && !pendingInvite"
-  ></app-player-list>
+  >
+  </app-player-list>
+  <button
+    (click)="playWithBot()"
+    *ngIf="onlineUsers.length === 0"
+    class="play-with-bot"
+  >
+    Play with Vall-i<i class="bx bx-bot"></i>
+  </button>
 
   <!-- Game Invitation -->
   <div class="invite-notification" *ngIf="pendingInvite">
@@ -42,7 +50,8 @@
       <p *ngIf="gameState.isGameOver" class="game-result">
         {{
           gameState.winner
-            ? gameState.winner === this.gameState.players[this.currentPlayerId]
+            ? gameState.winner ===
+              this.gameState.players[this.currentPlayerId].symbol
               ? winner()
               : loser()
             : "It's a draw 🤝"
@@ -61,6 +70,34 @@
           (click)="makeMove(row * 3 + col)"
         >
           {{ gameState.board[row * 3 + col] }}
+
+          <!-- Show move numbers -->
+          <span
+            *ngIf="
+              gameState.players[
+                this.currentPlayerId
+              ].lastMovePositions.includes(row * 3 + col)
+            "
+          >
+            {{
+              gameState.players[this.currentPlayerId].lastMovePositions.indexOf(
+                row * 3 + col
+              ) + 1
+            }}
+          </span>
+          <span
+            *ngIf="
+              gameState.players[
+                this.getOtherPlayerId()
+              ].lastMovePositions.includes(row * 3 + col)
+            "
+          >
+            {{
+              gameState.players[
+                this.getOtherPlayerId()
+              ].lastMovePositions.indexOf(row * 3 + col) + 1
+            }}
+          </span>
         </div>
       </div>
       <div class="footer-buttons">
@@ -68,9 +105,16 @@
         <button
           class="invite-button"
           (click)="inviteAgain()"
-          *ngIf="gameState.isGameOver"
+          *ngIf="gameState.isGameOver && !isPlayingWithBot()"
         >
           Invite again
+        </button>
+        <button
+          class="invite-button"
+          (click)="playWithBot()"
+          *ngIf="gameState.isGameOver && isPlayingWithBot()"
+        >
+          Play again
         </button>
       </div>
     </div>

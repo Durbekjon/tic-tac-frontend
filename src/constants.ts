@@ -12,7 +12,6 @@ export const SOCKET_EVENTS = {
   ACCEPT_INVITE: 'acceptInvite' as const,
   REJECT: 'reject' as const,
   INVITE_SENT: 'inviteSent' as const,
-
   // Game state events
   MAKE_MOVE: 'makeMove' as const,
   MOVE_MADE: 'moveMade' as const,
@@ -31,4 +30,9 @@ export const SOCKET_EVENTS = {
 
   // Error events
   GAME_ERROR: 'gameError' as const,
+
+  // Bot events
+
+  PLAY_WITH_BOT: 'playWithBot' as const,
+  BOT_MOVE: 'botMove' as const,
 } as const;
