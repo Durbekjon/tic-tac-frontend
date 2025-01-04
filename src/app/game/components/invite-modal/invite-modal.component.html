@@ -1,1 +1,19 @@
-<p>invite-modal works!</p>
+<div class="invite-notification" *ngIf="pendingInvite">
+  <h3>Game Invitation</h3>
+  <p>
+    You have been invited to play by {{ pendingInvite.user?.firstName }}
+    {{ pendingInvite.user?.lastName }}
+  </p>
+  <div class="invite-actions">
+    <button class="accept" [disabled]="!pendingInvite" (click)="onAcceptInvite()">
+      Accept
+    </button>
+    <button
+      class="decline"
+      [disabled]="!pendingInvite"
+      (click)="onRejectInvite()"
+    >
+      Decline
+    </button>
+  </div>
+</div>

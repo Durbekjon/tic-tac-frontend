@@ -1,0 +1,117 @@
+.game-board {
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+
+  .game-info {
+    margin-bottom: 20px;
+    text-align: center;
+    h3 {
+      padding-right: 60px;
+      color: #333;
+      margin-bottom: 10px;
+      font-size: 30px;
+      margin-left: -5px;
+    }
+  }
+
+  .board {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+    border-radius: 8px;
+
+    .row {
+      display: flex;
+      gap: 5px;
+      margin: 0;
+    }
+
+    .cell {
+      width: 100px;
+      height: 100px;
+      background: #222;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5em;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+
+      &.x {
+        color: #e74c3c;
+      }
+
+      &.o {
+        color: #3498db;
+      }
+
+      &:hover:not(.disabled) {
+        background: #333;
+      }
+
+      &.disabled {
+        cursor: not-allowed;
+        opacity: 0.8;
+      }
+    }
+    .footer-buttons {
+      max-width: 310px;
+      display: flex;
+      gap: 10px;
+      .back-button {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+        text-decoration: none;
+        font-weight: 500;
+        padding: 10px 13px;
+        flex: 1;
+        border-radius: 7px;
+        background: #333;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        border: none;
+
+        &:hover {
+          background: #444;
+        }
+      }
+      .invite-button {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+        text-decoration: none;
+        font-weight: 500;
+        padding: 10px 13px;
+        flex: 1;
+        border-radius: 7px;
+        background: #45a049;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        border: none;
+
+        &:hover {
+          background: #4caf50;
+        }
+      }
+    }
+  }
+  .game-result {
+    color: #333;
+    font-size: 24px;
+    text-align: center;
+    margin-top: 20px;
+  }
+}
