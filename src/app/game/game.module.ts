@@ -5,6 +5,7 @@ import { PlayerListComponent } from './components/player-list/player-list.compon
 import { InviteModalComponent } from './components/invite-modal/invite-modal.component';
 import { GameBoardComponent } from './components/game-board/game-board.component';
 import { InvalidUserComponent } from './components/invalid-user/invalid-user.component';
+import { BotLevelComponent } from './components/bot-level/bot-level.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { InvalidUserComponent } from './components/invalid-user/invalid-user.com
     InviteModalComponent,
     GameBoardComponent,
     InvalidUserComponent,
+    BotLevelComponent,
   ],
   imports: [CommonModule],
   exports: [GameComponent],

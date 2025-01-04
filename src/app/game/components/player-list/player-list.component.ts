@@ -9,6 +9,7 @@ export class PlayerListComponent {
   @Input() onlineUsers: { firstName: string; userId: string }[] = [];
   @Input() pendingInvite: boolean = false;
   @Input() sentInvites: any[] = [];
+  @Input() selectingBotLevel: boolean = false;
   @Output() invitePlayer = new EventEmitter<string>();
 
   onInvitePlayer(userId: string): void {

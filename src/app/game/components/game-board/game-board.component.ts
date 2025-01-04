@@ -9,6 +9,7 @@ export class GameBoardComponent {
   @Input() gameState: any = {};
   @Input() currentPlayerId: any = {};
   @Input() isInGame: boolean = false;
+  @Input() selectingBotLevel: boolean = false;
 
   @Output() makeMove = new EventEmitter<number>();
   @Output() leaveGame = new EventEmitter();

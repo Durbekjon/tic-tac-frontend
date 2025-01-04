@@ -31,6 +31,13 @@ export class GameComponent implements OnInit, OnDestroy {
   user: any;
   isUserWaiting: boolean = false;
   sentInvites: string[] = [];
+  botLevels: { name: string; value: string }[] = [
+    { name: 'Easy - Relax and Play', value: 'EASY' },
+    { name: "Medium - Let's Get Serious", value: 'MEDIUM' },
+    { name: 'Hard - Bring It On!', value: 'HARD' },
+  ];
+  selectingBotLevel: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
@@ -62,8 +69,7 @@ export class GameComponent implements OnInit, OnDestroy {
     });
   }
   playWithBot() {
-    const userId = this.currentPlayerId;
-    this.socket.emit(SOCKET_EVENTS.PLAY_WITH_BOT, { userId });
+    this.selectingBotLevel = true;
   }
 
   invitePlayer(otherPlayerId: string) {
@@ -120,6 +126,14 @@ export class GameComponent implements OnInit, OnDestroy {
         (playerId) => playerId !== this.currentPlayerId
       ),
       user: this.user,
+    });
+  }
+
+  selectedBotLevel(level: string) {
+    this.selectingBotLevel = false;
+    this.socket.emit(SOCKET_EVENTS.PLAY_WITH_BOT, {
+      userId: this.currentPlayerId,
+      botLevel: level,
     });
   }
 

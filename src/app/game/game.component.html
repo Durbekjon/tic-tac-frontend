@@ -2,6 +2,7 @@
   <!-- Game players list -->
   <app-player-list
     class="players-list"
+    [selectingBotLevel]="selectingBotLevel"
     [onlineUsers]="onlineUsers"
     [pendingInvite]="!!pendingInvite"
     [sentInvites]="sentInvites"
@@ -21,6 +22,7 @@
   <app-game-board
     class="game-board"
     *ngIf="isInGame"
+    [selectingBotLevel]="selectingBotLevel"
     [gameState]="gameState"
     [currentPlayerId]="currentPlayerId"
     [isInGame]="isInGame"
@@ -31,9 +33,18 @@
   ></app-game-board>
 
   <!-- Play with Wall-E bot -->
-  <button (click)="playWithBot()" class="play-with-bot" *ngIf="!isInGame">
+  <button
+    (click)="playWithBot()"
+    class="play-with-bot"
+    *ngIf="!isInGame && !selectingBotLevel"
+  >
     Play with Wall-E <i class="bx bx-bot"></i>
   </button>
 </div>
 <app-invalid-user [user]="user" [isUserWaiting]="isUserWaiting">
 </app-invalid-user>
+<app-bot-level
+  [botLevels]="botLevels"
+  [selectingBotLevel]="selectingBotLevel"
+  (botLevelSelected)="selectedBotLevel($event)"
+></app-bot-level>

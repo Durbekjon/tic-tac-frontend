@@ -1,0 +1,12 @@
+<div class="bot-levels" *ngIf="selectingBotLevel">
+  <div class="bot-level-text">
+    <p>Select the level of Wall-E<i class="bx bx-bot"></i></p>
+  </div>
+  <div
+    class="bot-level"
+    *ngFor="let level of botLevels"
+    (click)="onSelectBotLevel(level.value)"
+  >
+    <p>{{ level.name }}</p>
+  </div>
+</div>

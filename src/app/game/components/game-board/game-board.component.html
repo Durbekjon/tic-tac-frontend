@@ -1,4 +1,7 @@
-<div class="game-board" *ngIf="gameState.status !== 'waiting' && isInGame">
+<div
+  class="game-board"
+  *ngIf="gameState.status !== 'waiting' && isInGame && !selectingBotLevel"
+>
   <div class="game-info">
     <h3 *ngIf="!gameState.isGameOver">
       {{ isMyTurn() ? "Your turn!" : "Opponent's turn..." }}

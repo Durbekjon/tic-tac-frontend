@@ -1,0 +1,61 @@
+.bot-levels {
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  background-color: #000;
+  border-radius: 8px;
+  color: #ffffff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  max-width: 800px;
+  margin: auto;
+  font-family: Arial, sans-serif;
+  text-align: center; /* Added this to center all text */
+}
+
+.bot-level-text {
+  display: block;
+  margin-bottom: 15px;
+  padding: 1px;
+  border-radius: 4px;
+  max-width: 800px;
+  text-align: center; /* Centering text inside this block */
+
+  p {
+    font-size: 20px;
+    color: #909090;
+
+    i {
+      font-size: 22px;
+      color: #4caf50;
+      margin-left: 8px; /* Space between the text and the icon */
+    }
+  }
+}
+.bot-level {
+  display: flex;
+  justify-content: center; /* Centering the content horizontally */
+  align-items: center;
+  padding: 10px;
+  background: #000;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  border: 1px dashed #333;
+  max-width: 800px;
+  transition: 0.2s ease-in-out;
+
+  p {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: #909090;
+  }
+
+  &:hover {
+    background-color: #4caf50;
+    border: 1px dashed #4caf50;
+
+    p {
+      color: #fff;
+    }
+  }
+}
