@@ -14,7 +14,8 @@ import { UserService } from '../services/user.service';
 })
 export class GameComponent implements OnInit, OnDestroy {
   private socket: Socket;
-  pendingInvite: { gameId: string; from: string; user: any } | null = null;
+  pendingInvite: { gameId: string; from: string | any; user: any } | null =
+    null;
   activeGameId: string = '';
   currentPlayerId: string = '';
   isInGame: boolean = false;
@@ -25,6 +26,7 @@ export class GameComponent implements OnInit, OnDestroy {
     isGameOver: false,
     players: {},
     status: 'waiting',
+    botLevel: 'NO-BOT',
   };
   onlineUsers: any[] = [];
   chatId: string = '';
@@ -83,7 +85,7 @@ export class GameComponent implements OnInit, OnDestroy {
   acceptInvite() {
     if (this.pendingInvite) {
       this.socket.emit(SOCKET_EVENTS.ACCEPT_INVITE, {
-        from: this.pendingInvite.from,
+        from: this.pendingInvite.from.userId,
         to: this.currentPlayerId,
       });
       this.pendingInvite = null;
@@ -93,7 +95,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
   rejectInvite() {
     this.socket.emit(SOCKET_EVENTS.REJECT_INVITE, {
-      from: this.pendingInvite?.from,
+      from: this.pendingInvite?.from.userId,
       to: this.currentPlayerId,
     });
     this.pendingInvite = null;
@@ -114,6 +116,7 @@ export class GameComponent implements OnInit, OnDestroy {
       isGameOver: false,
       players: {},
       status: 'waiting',
+      botLevel: 'NO-BOT',
     };
     this.activeGameId = '';
     this.router.navigate(['/game'], { queryParams: { chat_id: this.chatId } });
@@ -155,6 +158,10 @@ export class GameComponent implements OnInit, OnDestroy {
     this.socket.disconnect(); // Socketni to'xtatish
   }
 
+  private getUserById(userId: string) {
+    return this.onlineUsers.find((user) => user.userId === userId);
+  }
+
   private handleSetupSocketListeners() {
     this.socket.on(SOCKET_EVENTS.CONNECT, () => {
       this.handleConnectUser();
@@ -190,6 +197,8 @@ export class GameComponent implements OnInit, OnDestroy {
     });
 
     this.socket.on(SOCKET_EVENTS.GAME_INVITE, (data: any) => {
+      const user = this.getUserById(data.from);
+      data.from = user;
       this.pendingInvite = data;
     });
 

@@ -1,8 +1,8 @@
 <div class="invite-notification" *ngIf="pendingInvite">
   <h3>Game Invitation</h3>
   <p>
-    You have been invited to play by {{ pendingInvite.user?.firstName }}
-    {{ pendingInvite.user?.lastName }}
+    You have been invited to play by {{ pendingInvite.from?.firstName }}
+    {{ pendingInvite.from?.lastName }}
   </p>
   <div class="invite-actions">
     <button class="accept" [disabled]="!pendingInvite" (click)="onAcceptInvite()">

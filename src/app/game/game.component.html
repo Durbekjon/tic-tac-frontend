@@ -36,7 +36,7 @@
   <button
     (click)="playWithBot()"
     class="play-with-bot"
-    *ngIf="!isInGame && !selectingBotLevel"
+    *ngIf="!isInGame && !selectingBotLevel && !pendingInvite"
   >
     Play with Wall-E <i class="bx bx-bot"></i>
   </button>

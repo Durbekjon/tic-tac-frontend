@@ -2,30 +2,35 @@
   <span class="online-users">
     <i class="bx bx-user"></i> {{ onlineUsers.length + 1 }}
   </span>
-  <div class="player-item" *ngFor="let user of onlineUsers">
-    <span class="player-name"> {{ user?.firstName }}</span>
-    <button
-      (click)="onInvitePlayer(user.userId)"
-      [disabled]="pendingInvite || sentInvites.includes(user.userId)"
-    >
-      <div *ngIf="sentInvites.includes(user.userId)" class="waiting-animation">
+
+  <ng-container *ngIf="onlineUsers.length > 0; else noPlayers">
+    <div class="player-item" *ngFor="let user of onlineUsers; let i = index">
+      <span class="player-name">{{ user?.firstName }}</span>
+      <button
+        (click)="onInvitePlayer(user.userId)"
+        [disabled]="pendingInvite || isInviteSent(i, user.userId)"
+      >
+        <ng-container *ngIf="isInviteSent(i, user.userId); else inviteText">
+          <div class="waiting-animation">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+          waiting...
+        </ng-container>
+        <ng-template #inviteText>Invite</ng-template>
+      </button>
+    </div>
+  </ng-container>
+
+  <ng-template #noPlayers>
+    <div class="no-players" style="color: #777; text-align: center; padding: 30px">
+      <div class="waiting-animation">
         <div class="dot"></div>
         <div class="dot"></div>
         <div class="dot"></div>
       </div>
-      {{ sentInvites.includes(user.userId) ? "waiting..." : "Invite" }}
-    </button>
-  </div>
-  <div
-    *ngIf="onlineUsers.length === 0"
-    style="color: #777; text-align: center; padding: 30px"
-    class="no-players"
-  >
-    <div class="waiting-animation">
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
+      <p>Waiting for other players to connect...</p>
     </div>
-    <p>Waiting for other players to connect...</p>
-  </div>
+  </ng-template>
 </div>

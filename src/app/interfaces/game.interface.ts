@@ -10,4 +10,5 @@ export interface GameState {
   gameId?: string;
   winningCombination?: number[];
   soundPlayed?: boolean;
+  botLevel: 'NO-BOT' | 'EASY' | 'MEDIUM' | 'HARD';
 }

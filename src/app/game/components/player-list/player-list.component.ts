@@ -15,4 +15,7 @@ export class PlayerListComponent {
   onInvitePlayer(userId: string): void {
     this.invitePlayer.emit(userId);
   }
+  isInviteSent(index: number, userId: string): boolean {
+    return this.sentInvites[index]?.to === userId;
+  }
 }
